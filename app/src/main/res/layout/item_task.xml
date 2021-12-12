@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="date"
+            type="String" />
+        <variable
+            name="title"
+            type="String" />
+        <variable
+            name="desc"
+            type="String" />
+        <variable
+            name="onClick"
+            type="com.product.calendarevents.view.adapter.OnTaskClickListener" />
+    </data>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/bg_add_task"
+    android:orientation="vertical"
+    android:onClick="@{() -> onClick}"
+    android:layout_marginTop="10dp"
+    android:foreground="?attr/selectableItemBackgroundBorderless">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{date}"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{title}"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@{desc}"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
+
+
+</LinearLayout>
+</layout>

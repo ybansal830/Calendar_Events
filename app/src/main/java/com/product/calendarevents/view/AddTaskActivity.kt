@@ -30,8 +30,14 @@ class AddTaskActivity : AppCompatActivity() {
 
         setDetails()
 
-        activityAddTaskBinding.btnAddTask.setOnClickListener {
-            addTask()
+        activityAddTaskBinding.apply {
+            btnAddTask.setOnClickListener {
+                addTask()
+            }
+            ivBack.setOnClickListener {
+                startActivity(Intent(this@AddTaskActivity,
+                    CalendarActivity::class.java))
+            }
         }
 
     }

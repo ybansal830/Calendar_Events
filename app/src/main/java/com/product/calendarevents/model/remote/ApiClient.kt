@@ -9,7 +9,7 @@ interface ApiClient {
 
     @POST(Constants.GET_TASK_LIST)
     fun getTaskList(
-        @Body userID: Int
+        @Body hashMap: HashMap<String, Int>
     )
     : Observable<ResponseDTO>
 

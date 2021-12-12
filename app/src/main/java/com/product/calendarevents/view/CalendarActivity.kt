@@ -44,6 +44,10 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
 
         onMonthSelectListener()
 
+        activityCalendarBinding.ivEvents.setOnClickListener {
+            startActivity(Intent(this,TasksActivity::class.java))
+        }
+
     }
 
     private fun onMonthSelectListener() {

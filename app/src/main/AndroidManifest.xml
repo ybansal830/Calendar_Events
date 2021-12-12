@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarEvents">
-        <activity android:name=".view.AddTaskActivity"/>
+        <activity android:name=".view.TasksActivity"></activity>
+        <activity android:name=".view.AddTaskActivity" />
         <activity
             android:name=".view.CalendarActivity"
             android:exported="true"

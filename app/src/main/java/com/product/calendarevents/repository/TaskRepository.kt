@@ -20,7 +20,9 @@ class TaskRepository @Inject constructor(
 ) {
 
     fun getRemoteTasks(): Observable<List<Task>>{
-        return apiClient.getTaskList(Constants.USER_ID)
+        val hashMap = HashMap<String,Int>()
+        hashMap["user_id"] = Constants.USER_ID
+        return apiClient.getTaskList(hashMap)
             .flatMap {
                 return@flatMap Observable.just(it.tasks)
             }.subscribeOn(Schedulers.io())
