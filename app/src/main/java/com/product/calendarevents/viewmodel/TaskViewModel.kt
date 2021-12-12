@@ -49,7 +49,16 @@ class TaskViewModel @Inject constructor(
 
     fun deleteRemoteTask(taskId: Int){
         repository.deleteLocalTask(taskId)
-        repository.deleteRemoteTask(taskId)
+        repository.deleteRemoteTask(taskId).subscribe(object: Observer<Void>{
+            override fun onSubscribe(d: Disposable?) {
+            }
+            override fun onNext(t: Void?) {
+            }
+            override fun onError(e: Throwable?) {
+            }
+            override fun onComplete() {
+            }
+        })
     }
 
     fun storeRemoteTask(task: TaskDetail){
