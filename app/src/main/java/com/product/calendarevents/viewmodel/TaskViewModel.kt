@@ -35,7 +35,8 @@ class TaskViewModel @Inject constructor(
             val newList = mutableListOf<TaskEntity>()
             for (i in listT){
                 i.taskDetail.apply {
-                    newList.add(TaskEntity(i.taskId,date,day,description,title))
+                    newList.add(TaskEntity(i.taskId,
+                        date,day,description,title))
                 }
             }
             repository.storeLocalTasksList(newList)
@@ -47,17 +48,8 @@ class TaskViewModel @Inject constructor(
     }
 
     fun deleteRemoteTask(taskId: Int){
-        repository.deleteRemoteTask(taskId).subscribe(object: Observer<Void>{
-            override fun onSubscribe(d: Disposable?) {
-            }
-            override fun onNext(t: Void?) {
-                repository.deleteLocalTask(taskId)
-            }
-            override fun onError(e: Throwable?) {
-            }
-            override fun onComplete() {
-            }
-        })
+        repository.deleteLocalTask(taskId)
+        repository.deleteRemoteTask(taskId)
     }
 
     fun storeRemoteTask(task: TaskDetail){

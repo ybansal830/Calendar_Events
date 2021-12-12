@@ -42,6 +42,9 @@ class AddTaskActivity : AppCompatActivity() {
 
     }
 
+
+    // Adding task and storing it into the remote server.
+
     private fun addTask() {
         var title = ""
         var desc = ""
@@ -55,6 +58,8 @@ class AddTaskActivity : AppCompatActivity() {
             startActivity(Intent(this,CalendarActivity::class.java))
         }
     }
+
+    // Setting current date details by taking from previous activity.
 
     private fun setDetails() {
         val selectedDay = intent.getIntExtra("day",0)

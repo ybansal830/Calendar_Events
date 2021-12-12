@@ -33,6 +33,7 @@ class TaskRecycler(
         fun setData(taskEntity: TaskEntity){
             itemTaskBinding.let { item ->
                 taskEntity.apply {
+                    item.id = taskID.toString()
                     item.date = "Date: $day $date"
                     item.title = "Title: $title"
                     item.desc = "Description: $description"

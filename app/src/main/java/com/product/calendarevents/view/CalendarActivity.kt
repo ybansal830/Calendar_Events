@@ -50,6 +50,9 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
 
     }
 
+
+    // If any option is selected from spinner of month list then setting the month view.
+
     private fun onMonthSelectListener() {
         activityCalendarBinding.apply {
             monthSpinner
@@ -66,6 +69,9 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
         }
     }
 
+
+    // // If any option is selected from spinner of year list then setting the month view.
+
     private fun onYearSelectListener() {
         activityCalendarBinding.apply {
             yearSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
@@ -80,6 +86,11 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
             }
         }
     }
+
+
+    /* Setting the month view according to the days present in it and also taking the day of week
+    * from the particular month starting and then passing the both days and day to set in recycler
+    * view. */
 
     private fun setMonthView() {
         val date = dateFormat.parse("01/$selectedMonth/$selectedYear")
@@ -97,6 +108,9 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
         setCalendarRecyclerView(days,day)
     }
 
+
+    // Setting the month list spinner
+
     private fun setMonthSpinner() {
         ArrayAdapter.createFromResource(this,
         R.array.months,
@@ -106,6 +120,9 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
         }
     }
 
+
+    // Setting the year list spinner
+
     private fun setYearSpinner() {
         for (i in 2021..2100) yearArray.add(i.toString())
         val yearArrayAdapter = ArrayAdapter<String>(this,
@@ -113,6 +130,9 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
         yearArrayAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
         activityCalendarBinding.yearSpinner.adapter = yearArrayAdapter
     }
+
+
+    // Setting month view recycler view according to days and starting day of week
 
     private fun setCalendarRecyclerView(days: Int,day: Int) {
         activityCalendarBinding.apply {
@@ -122,6 +142,9 @@ class CalendarActivity : AppCompatActivity(), OnDayClickListener {
             }
         }
     }
+
+    /* On click of any date that is present on month view changing activity to add task and also
+    * passing all the details of particular selected date. */
 
     override fun onClick(day: String) {
         val intent = Intent(this,AddTaskActivity::class.java)

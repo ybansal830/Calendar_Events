@@ -1,9 +1,6 @@
 package com.product.calendarevents.model.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import io.reactivex.rxjava3.core.Observable
 
 @Dao
@@ -15,7 +12,7 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun storeTasksList(list: List<TaskEntity>)
 
-    @Query("DELETE FROM task WHERE taskID = :taskId")
+    @Query("DELETE FROM task WHERE id = :taskId")
     fun deleteTask(taskId: Int)
 
 }

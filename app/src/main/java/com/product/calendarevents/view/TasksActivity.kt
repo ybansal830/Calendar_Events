@@ -30,17 +30,23 @@ class TasksActivity : AppCompatActivity(), OnTaskClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityTaskBinding = DataBindingUtil
-            .setContentView(this,R.layout.activity_tasks)
+            .setContentView(this,
+                R.layout.activity_tasks)
 
         setRecyclerView()
 
         getTaskList()
 
         activityTaskBinding.ivBack.setOnClickListener {
-            startActivity(Intent(this,CalendarActivity::class.java))
+            startActivity(Intent(this,
+                CalendarActivity::class.java))
         }
 
     }
+
+
+    /* Getting task list from remote server then storing it into local room db and then showing
+    * the latest data on the recyclerview. */
 
     private fun getTaskList() {
         viewModel.getRemoteTasks()
@@ -67,20 +73,28 @@ class TasksActivity : AppCompatActivity(), OnTaskClickListener {
     private fun setRecyclerView() {
         activityTaskBinding.apply {
             tasksRecyclerView.apply {
-                adapter = TaskRecycler(taskList,this@TasksActivity)
-                layoutManager = LinearLayoutManager(this@TasksActivity)
+                adapter = TaskRecycler(taskList,
+                    this@TasksActivity)
+                layoutManager = LinearLayoutManager(
+                    this@TasksActivity)
             }
         }
     }
+
+
+    /* On click of any task item, showing the option to delete it. If confirm delete clicked then
+    * deleting the task from both room db as well as remote server. */
 
     override fun onClick(taskId: String) {
         AlertDialog.Builder(this)
             .setTitle("Delete Task")
             .setMessage("Confirm delete task")
-            .setPositiveButton("Delete"
-            ) { p0, p1 ->
-                viewModel.deleteRemoteTask(taskId.toInt())
-            }
+            .setPositiveButton("Delete",
+                object: DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    viewModel.deleteRemoteTask(taskId.toInt())
+                }
+            })
             .show()
     }
 }

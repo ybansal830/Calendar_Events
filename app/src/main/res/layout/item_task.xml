@@ -2,6 +2,9 @@
 <layout>
     <data>
         <variable
+            name="id"
+            type="String" />
+        <variable
             name="date"
             type="String" />
         <variable
@@ -21,7 +24,7 @@
     android:padding="10dp"
     android:background="@drawable/bg_add_task"
     android:orientation="vertical"
-    android:onClick="@{() -> onClick}"
+    android:onClick="@{() -> onClick.onClick(id)}"
     android:layout_marginTop="10dp"
     android:foreground="?attr/selectableItemBackgroundBorderless">
 
