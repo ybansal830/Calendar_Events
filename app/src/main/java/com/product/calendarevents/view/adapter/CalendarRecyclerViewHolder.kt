@@ -5,7 +5,8 @@ import com.product.calendarevents.databinding.ItemCalendarBinding
 
 class CalendarRecyclerViewHolder(
     private val itemCalendarBinding: ItemCalendarBinding,
-    private val startDay: Int
+    private val startDay: Int,
+    private val onDayClickListener: OnDayClickListener
 ) : RecyclerView.ViewHolder(itemCalendarBinding.root) {
 
         fun setData(dayPos: Int){
@@ -20,6 +21,7 @@ class CalendarRecyclerViewHolder(
                     5 -> day = "Fri"
                     6 -> day = "Sat"
                 }
+                onClick = onDayClickListener
             }
         }
 

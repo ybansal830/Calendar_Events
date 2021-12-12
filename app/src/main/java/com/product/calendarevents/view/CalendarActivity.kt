@@ -1,5 +1,6 @@
 package com.product.calendarevents.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,11 +11,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.product.calendarevents.R
 import com.product.calendarevents.databinding.ActivityCalendarBinding
 import com.product.calendarevents.view.adapter.CalendarRecyclerAdapter
+import com.product.calendarevents.view.adapter.OnDayClickListener
 import kotlinx.android.synthetic.main.activity_calendar.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarActivity : AppCompatActivity() {
+class CalendarActivity : AppCompatActivity(), OnDayClickListener {
 
     private lateinit var activityCalendarBinding: ActivityCalendarBinding
 
@@ -22,6 +24,9 @@ class CalendarActivity : AppCompatActivity() {
 
     private val calendar = Calendar.getInstance()
     private val dateFormat = SimpleDateFormat("dd/MM/yyyy",Locale.getDefault())
+
+    private var selectedYear = 2021
+    private var selectedMonth = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +51,8 @@ class CalendarActivity : AppCompatActivity() {
             monthSpinner
                 .onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    val month = p2+1
-                    val year = 2021 + yearSpinner.selectedItemId
-                    setMonthView(month,year)
+                    selectedMonth = p2+1
+                    setMonthView()
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -58,23 +62,35 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMonthView(month: Int,year: Long) {
-        val date = dateFormat.parse("01/$month/$year")
+    private fun onYearSelectListener() {
+        activityCalendarBinding.apply {
+            yearSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    selectedYear = 2021 + p2
+                    setMonthView()
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+
+            }
+        }
+    }
+
+    private fun setMonthView() {
+        val date = dateFormat.parse("01/$selectedMonth/$selectedYear")
         calendar.time = date!!
         val day = calendar.get(Calendar.DAY_OF_WEEK)
         var days = 31
-        if(month == 2){
-            if(year%4 == 0L) days = 29
-            else days = 28
+        if(selectedMonth == 2){
+            days = if(selectedYear%4 == 0) 29
+            else 28
         }
-        else if(month == 4 || month == 6 || month == 9 || month == 11){
+        else if(selectedMonth == 4 || selectedMonth == 6 ||
+            selectedMonth == 9 || selectedMonth == 11){
             days = 30
         }
         setCalendarRecyclerView(days,day)
-    }
-
-    private fun onYearSelectListener() {
-
     }
 
     private fun setMonthSpinner() {
@@ -97,9 +113,19 @@ class CalendarActivity : AppCompatActivity() {
     private fun setCalendarRecyclerView(days: Int,day: Int) {
         activityCalendarBinding.apply {
             calendar_recycler_view.apply {
-                adapter = CalendarRecyclerAdapter(days,day)
+                adapter = CalendarRecyclerAdapter(days,day-1,this@CalendarActivity)
                 layoutManager = GridLayoutManager(context,7)
             }
         }
+    }
+
+    override fun onClick(day: String) {
+        val intent = Intent(this,AddTaskActivity::class.java)
+        val date = dateFormat.parse("$day/$selectedMonth/$selectedYear")
+        calendar.time = date!!
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        intent.putExtra("day",dayOfWeek-1)
+        intent.putExtra("date",dateFormat.format(date))
+        startActivity(intent)
     }
 }
